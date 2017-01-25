@@ -9,9 +9,7 @@ output:
 
 ## Loading and preprocessing the data
 First of all set your working directory (it should includes data zip file) using setwd() function.
-```{r, echo=FALSE}
-setwd("C:/Documents and Settings/Максуд/Мои документы/Google Диск/R_статистика/Data Science/Reproducible Research/RepData_PeerAssessment1-master")
-```
+
 Unziping and reading data are second and third steps respectively 
 ```{r}
 unzip("activity.zip")
@@ -32,7 +30,7 @@ hist(steps_by_day$steps, main = paste("Total Steps Each Day"), col="blue", xlab=
 rmean <- as.integer(mean(steps_by_day$steps))
 rmedian <- as.integer(median(steps_by_day$steps))
 ```
-The mean is **`r rmean`** and the median is **`r rmedian`**.
+The `mean` is 10766 and the `median` is 10765.
 
 ## What is the average daily activity pattern?
 - Calculate average steps for each interval for all days.
@@ -44,10 +42,12 @@ steps_by_interval <- aggregate(steps ~ interval, data, mean)
 
 plot(steps_by_interval$interval,steps_by_interval$steps, type="l", xlab="Interval", ylab="Number of Steps",main="Average Number of Steps per Day by Interval")
 ```
+![plot of chunk unnamed-chunk-3](./figure-html/unnamed-chunk-3.png) 
+
 ```{r, results='hide'}
 max_interval <- steps_by_interval[which.max(steps_by_interval$steps),1]
 ```
-The 5-minute interval, on average across all the days in the data set, containing the maximum number of steps is **`r max_interval`**
+The 5-minute interval, on average across all the days in the data set, containing the maximum number of steps is 835
 
 ## Imputing missing values
 
@@ -69,6 +69,7 @@ hist(steps_by_day_i$steps, main = paste("Total Steps Each Day"), col="blue", xla
 hist(steps_by_day$steps, main = paste("Total Steps Each Day"), col="red", xlab="Number of Steps", add=T)
 legend("topright", c("Imputed", "Non-imputed"), col=c("blue", "red"), lwd=10)
 ```  
+![plot of chunk unnamed-chunk-6](./figure-html/unnamed-chunk-6.png) 
    
 Calculate new mean and median for imputed data. 
 ```{r, results='hide'}
@@ -85,11 +86,11 @@ Calculate total difference.
 total_diff <- as.integer(sum(steps_by_day_i$steps) - sum(steps_by_day$steps))
 ```
 #Results
-- The imputed data mean is **`r rmean.i`**
-- The imputed data median is **`r rmedian.i`**
-- The difference between the non-imputed mean and imputed mean is **`r mean_diff`**
-- The difference between the non-imputed mean and imputed mean is **`r med_diff`**
-- The difference between total number of steps between imputed and non-imputed data is **`r total_diff`**.   Thus, there were **`r total_diff`** more steps in the imputed data.
+- The imputed data mean is **10590**
+- The imputed data median is **10766**
+- The difference between the non-imputed mean and imputed mean is **-176.4949**
+- The difference between the non-imputed mean and imputed mean is **1.1887**
+- The difference between total number of steps between imputed and non-imputed data is **75363**.   Thus, there were **75363** more steps in the imputed data.
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
@@ -104,4 +105,4 @@ library(lattice)
 
 xyplot(steps_by_interval_i$steps ~ steps_by_interval_i$interval|steps_by_interval_i$dow, main="Average Steps per Day by Interval",xlab="Interval", ylab="Steps",layout=c(1,2), type="l")
 ```
-
+![plot of chunk unnamed-chunk-10](./figure-html/unnamed-chunk-10.png) 
