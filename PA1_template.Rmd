@@ -4,15 +4,30 @@ output:
   html_document:
     keep_md: true
 ---
-
+**Author - Sai Pavlo**  
+*Date: 25.01.2016*
 
 ## Loading and preprocessing the data
 
+```{r}
 
+if(!file.exists("getdata-projectfiles-UCI HAR Dataset.zip")) {
+        temp <- tempfile()
+        download.file("http://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip",temp)
+        unzip(temp)
+        unlink(temp)
+}
+
+data <- read.csv("activity.csv")
+
+```
 
 ## What is mean total number of steps taken per day?
 
-
+```{r}
+steps_by_day <- aggregate(steps ~ date, data, sum)
+hist(steps_by_day$steps, main = paste("Total Steps Each Day"), col="blue", xlab="Number of Steps")
+```
 
 ## What is the average daily activity pattern?
 
